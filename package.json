@@ -1,0 +1,19 @@
+{
+  "name": "languist",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "web:dev": "bun run --cwd apps/next dev",
+    "web:build": "bun run --cwd apps/next build",
+    "clean": "rm -rf node_modules {packages,apps}/*/node_modules bun.lockb {packages,apps}/*/bun.lockb"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
