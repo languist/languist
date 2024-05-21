@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeProvider } from "@/components/common/theme-provider";
 import { I18nProviderClient } from "@/locales/client";
 
 import type { ReactNode } from "react";
@@ -12,7 +13,14 @@ type ProviderProps = {
 export function Providers({ locale, children }: ProviderProps) {
   return (
     <I18nProviderClient locale={locale}>
-      {children}
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
     </I18nProviderClient>
   );
 }
