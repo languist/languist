@@ -8,6 +8,7 @@
   "scripts": {
     "dashboard:dev": "bun run --cwd apps/dashboard dev",
     "dashboard:build": "bun run --cwd apps/dashboard build",
+    "dashboard:start": "bun run --cwd apps/dashboard start",
     "clean": "rm -rf node_modules {packages,apps}/*/node_modules bun.lockb {packages,apps}/*/bun.lockb"
   },
   "devDependencies": {
