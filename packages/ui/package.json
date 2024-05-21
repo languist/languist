@@ -1,0 +1,25 @@
+{
+  "name": "@languist/ui",
+  "version": "1.0.0",
+  "private": true,
+  "sideEffects": false,
+  "files": ["tailwind.config.ts", "postcss.config.js", "globals.css"],
+  "devDependencies": {
+    "@languist/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "exports": {
+    "./tailwind.config": "./tailwind.config.ts",
+    "./postcss.config": "./postcss.config.js",
+    "./globals.css": "./src/globals.css",
+    "./cn": "./src/utils/cn.ts",
+    "./button": "./src/components/ui/button.tsx"
+  }
+}
