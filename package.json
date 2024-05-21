@@ -6,8 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "web:dev": "bun run --cwd apps/next dev",
-    "web:build": "bun run --cwd apps/next build",
+    "dashboard:dev": "bun run --cwd apps/dashboard dev",
+    "dashboard:build": "bun run --cwd apps/dashboard build",
     "clean": "rm -rf node_modules {packages,apps}/*/node_modules bun.lockb {packages,apps}/*/bun.lockb"
   },
   "devDependencies": {
