@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --max-warnings 0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
@@ -21,12 +21,14 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@languist/eslint-config": "workspace:*",
     "@languist/tsconfig": "workspace:*",
-    "typescript": "^5",
+    "@next/eslint-plugin-next": "^14.2.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "typescript": "^5"
   }
 }

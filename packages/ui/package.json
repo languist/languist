@@ -4,6 +4,9 @@
   "private": true,
   "sideEffects": false,
   "files": ["tailwind.config.ts", "postcss.config.js", "globals.css"],
+  "scripts": {
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
   "devDependencies": {
     "@languist/tsconfig": "workspace:*"
   },
@@ -15,6 +18,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "react": "^18",
+    "react-dom": "^18",
     "react-hook-form": "^7.51.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"

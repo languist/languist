@@ -1,8 +1,17 @@
-"use client"
+'use client'
 
-import { ControllerProps, FieldPath, FieldValues, useFormContext } from "react-hook-form"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./form"
-import { Input, InputProps } from "./input"
+import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './form'
+import type { InputProps } from './input'
+import { Input } from './input'
 
 type BaseFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -45,11 +54,7 @@ export const InputFormField = <
         <FormItem className={className}>
           {customLabel || <FormLabel required={required}>{label}</FormLabel>}
           <FormControl>
-            <Input
-              disabled={isDisabled}
-              placeholder={placeholder}
-              {...field}
-            />
+            <Input disabled={isDisabled} placeholder={placeholder} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
