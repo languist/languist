@@ -1,5 +1,6 @@
-import { LoginForm } from "@/modules/auth/login-form";
-import { Metadata } from "next";
+import type { Metadata } from 'next'
+
+import { LoginForm } from '@/modules/auth/login-form'
 
 export const metadata: Metadata = {
   title: 'Login to Languist',

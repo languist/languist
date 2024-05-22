@@ -12,6 +12,7 @@
     "clean": "rm -rf node_modules {packages,apps}/*/node_modules bun.lockb {packages,apps}/*/bun.lockb"
   },
   "devDependencies": {
+    "@languist/eslint-config": "workspace:*",
     "@types/bun": "latest"
   },
   "peerDependencies": {
