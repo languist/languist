@@ -8,5 +8,10 @@ export default {
     container: {
       center: true,
     },
+    extend: {
+      backgroundImage: {
+        'auth-pattern': "url('/auth-pattern.svg')",
+      },
+    }
   },
 } satisfies Config;
