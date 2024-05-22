@@ -1,5 +1,5 @@
-import { AuthGreeting } from "@/components/auth/auth-greeting";
-import { ModeToggle } from "@/components/common/mode-toggle";
+import { AuthGreeting } from "@/modules/auth/auth-greeting";
+import { ModeToggle } from "@/modules/common/mode-toggle";
 import { Button } from "@languist/ui/button";
 
 export default function Home() {

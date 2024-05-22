@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@/components/common/theme-provider";
+import { ThemeProvider } from "@/modules/common/theme-provider";
 import { I18nProviderClient } from "@/locales/client";
 
 import type { ReactNode } from "react";
