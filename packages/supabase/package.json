@@ -1,0 +1,25 @@
+{
+  "name": "@languist/supabase",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "exports": {
+    "./client": "./src/client/client.ts",
+    "./middleware": "./src/client/middleware.ts",
+    "./types": "./src/types.ts",
+    "./auth": "./src/auth.ts"
+  },
+  "scripts": {
+    "start": "npx supabase start",
+    "new": "npx supabase functions new",
+    "deploy": "npx supabase functions deploy",
+    "generate": "npx supabase gen types typescript --project-id $PROJECT_ID --schema public > ./src/types.ts"
+  },
+  "dependencies": {
+    "@languist/auth": "workspace:*",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.43.4"
+  },
+  "devDependencies": {
+    "supabase": "1.167.4"
+  }
+}

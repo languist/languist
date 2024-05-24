@@ -1,5 +1,7 @@
+import { Toaster } from '@languist/ui/sonner'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+
 import '@languist/ui/globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
@@ -16,8 +18,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html suppressHydrationWarning lang="en">
+      <body className={inter.className}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   )
 }

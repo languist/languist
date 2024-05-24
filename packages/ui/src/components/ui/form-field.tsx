@@ -38,6 +38,7 @@ export const InputFormField = <
   rules,
   placeholder,
   className,
+  inputProps,
   ...props
 }: BaseFormFieldProps<TFieldValues, TName> & {
   inputProps?: InputProps
@@ -54,7 +55,12 @@ export const InputFormField = <
         <FormItem className={className}>
           {customLabel || <FormLabel required={required}>{label}</FormLabel>}
           <FormControl>
-            <Input disabled={isDisabled} placeholder={placeholder} {...field} />
+            <Input
+              disabled={isDisabled}
+              placeholder={placeholder}
+              {...inputProps}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>

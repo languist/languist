@@ -1,21 +1,44 @@
 'use client'
 
+import { useEffect } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useLogin } from '@languist/auth'
+import { AuthError } from '@languist/supabase/auth'
+import { BrandIcons } from '@languist/ui/brand-icons'
 import { Button } from '@languist/ui/button'
-import { Form, FormLabel } from '@languist/ui/form'
+import { Form, FormError, FormLabel } from '@languist/ui/form'
 import { InputFormField } from '@languist/ui/form-field'
 import { Logo } from '@languist/ui/logo'
-import { IconBrandGithub } from '@tabler/icons-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { useI18n } from '@/locales/client'
 
+import type { ANY } from '../common/any'
+
+import { ProviderButton } from './provider-button'
 import { passwordAuthFormSchema } from './schema'
 import type { PasswordAuthFormValues } from './schema'
 
+const { origin } = window.location
+
+const getFragmentParams = (fragment?: string) => {
+  if (!fragment) {
+    return {}
+  }
+  const params = new URLSearchParams(fragment)
+  const entries = Object.fromEntries(params.entries())
+  return entries
+}
+
 export function LoginForm() {
   const t = useI18n()
+  const router = useRouter()
+
+  const [, submit] = useLogin({ action: 'logIn' })
 
   const form = useForm<PasswordAuthFormValues>({
     resolver: zodResolver(passwordAuthFormSchema),
@@ -25,9 +48,33 @@ export function LoginForm() {
     },
   })
 
-  function onSubmit(values: PasswordAuthFormValues) {
-    // eslint-disable-next-line no-console
-    console.log(values)
+  useEffect(() => {
+    const serverError = getFragmentParams(
+      window.location.hash.substring(1),
+    )?.error_description
+    if (serverError) {
+      form.setError('root', { message: serverError })
+    }
+  }, [form])
+
+  async function onSubmit(values: PasswordAuthFormValues) {
+    try {
+      await submit(values, {
+        redirectTo: origin!,
+      })
+      router.replace('/')
+      toast.success(t('auth.login.success.toastTitle'), {
+        description: t('auth.login.success.toastDescription'),
+      })
+    } catch (error: unknown) {
+      if (error instanceof AuthError) {
+        form.setError('root', { message: error.message })
+      } else {
+        form.setError('root', {
+          message: (error as ANY)?.message || t('auth.login.error'),
+        })
+      }
+    }
   }
 
   return (
@@ -60,13 +107,15 @@ export function LoginForm() {
                 <FormLabel required>{t('auth.login.password')}</FormLabel>
                 <Link
                   className="ml-auto inline-block text-sm underline"
-                  href="/forgot-password"
+                  href="/auth/forgot-password"
+                  tabIndex={-1}
                 >
                   {t('auth.login.forgotPassword')}
                 </Link>
               </div>
             }
           />
+          <FormError />
           <Button
             className="w-full"
             disabled={form.formState.isSubmitting}
@@ -84,23 +133,21 @@ export function LoginForm() {
               </span>
             </div>
           </div>
-          <Button
-            className="w-full"
+          <ProviderButton
             disabled={form.formState.isSubmitting}
-            type="button"
-            variant="outline"
+            provider="github"
           >
-            <IconBrandGithub className="mr-2 size-4" />
+            <BrandIcons.GitHub className="mr-2 size-4" />
             {t('auth.login.github')}
-          </Button>
-          <div className="mt-4 text-center text-sm">
-            {t('auth.login.dontHaveAccount')}{' '}
-            <Link className="underline" href="/signup">
-              {t('auth.login.signUp')}
-            </Link>
-          </div>
+          </ProviderButton>
         </form>
       </Form>
+      <div className="text-center text-sm">
+        {t('auth.login.dontHaveAccount')}{' '}
+        <Link className="underline" href="/auth/signup">
+          {t('auth.login.signUp')}
+        </Link>
+      </div>
     </>
   )
 }

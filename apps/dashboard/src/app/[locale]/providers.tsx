@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 
 import { I18nProviderClient } from '@/locales/client'
+import { AuthProvider } from '@/modules/auth/auth-provider'
 import { ThemeProvider } from '@/modules/common/theme-provider'
 
 type ProviderProps = {
@@ -12,15 +13,17 @@ type ProviderProps = {
 
 export function Providers({ locale, children }: ProviderProps) {
   return (
-    <I18nProviderClient locale={locale}>
-      <ThemeProvider
-        disableTransitionOnChange
-        enableSystem
-        attribute="class"
-        defaultTheme="system"
-      >
-        {children}
-      </ThemeProvider>
-    </I18nProviderClient>
+    <AuthProvider>
+      <I18nProviderClient locale={locale}>
+        <ThemeProvider
+          disableTransitionOnChange
+          enableSystem
+          attribute="class"
+          defaultTheme="system"
+        >
+          {children}
+        </ThemeProvider>
+      </I18nProviderClient>
+    </AuthProvider>
   )
 }

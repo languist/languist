@@ -1,0 +1,10 @@
+{
+  "name": "@languist/auth",
+  "version": "1.0.0",
+  "description": "Authentication provider for Languist",
+  "source": "src/index.ts",
+  "main": "./index.js",
+  "scripts": {
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  }
+}
