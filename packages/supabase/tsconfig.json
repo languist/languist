@@ -1,0 +1,8 @@
+{
+  "extends": "@languist/tsconfig/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

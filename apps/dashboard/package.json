@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
+    "@languist/auth": "workspace:*",
+    "@languist/supabase": "workspace:*",
     "@languist/ui": "workspace:*",
+    "@supabase/ssr": "^0.3.0",
     "@tabler/icons-react": "^3.5.0",
     "next": "14.2.3",
     "next-international": "^1.2.4",
@@ -18,6 +21,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
+    "sonner": "^1.4.41",
     "zod": "^3.23.8"
   },
   "devDependencies": {

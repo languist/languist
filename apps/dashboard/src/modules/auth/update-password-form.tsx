@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useResetPassword } from '@languist/auth'
+import { useUpdatePassword } from '@languist/auth'
 import { AuthError } from '@languist/supabase/auth'
 import { Alert, AlertDescription, AlertTitle } from '@languist/ui/alert'
 import { Button } from '@languist/ui/button'
@@ -9,36 +9,36 @@ import { Form, FormError } from '@languist/ui/form'
 import { InputFormField } from '@languist/ui/form-field'
 import { Logo } from '@languist/ui/logo'
 import { IconCircleCheck } from '@tabler/icons-react'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 
 import { useI18n } from '@/locales/client'
 
-import { forgotPasswordFormSchema } from './schema'
-import type { ForgotPasswordFormValues } from './schema'
+import { updatePasswordFormSchema } from './schema'
+import type { UpdatePasswordFormValues } from './schema'
 
 const { origin } = window.location
 
-export function ForgotPasswordForm() {
+export function UpdatePasswordForm() {
   const t = useI18n()
-  const [{ isResolved }, submit] = useResetPassword()
+  const router = useRouter()
 
-  const form = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(forgotPasswordFormSchema),
+  const [{ isResolved }, submit] = useUpdatePassword()
+
+  const form = useForm<UpdatePasswordFormValues>({
+    resolver: zodResolver(updatePasswordFormSchema),
     defaultValues: {
-      email: '',
+      password: '',
+      confirmPassword: '',
     },
   })
 
-  async function onSubmit(values: ForgotPasswordFormValues) {
+  async function onSubmit(values: UpdatePasswordFormValues) {
     try {
       await submit(values, {
-        redirectTo: `${origin!}/auth/update-password`,
+        redirectTo: origin!,
       })
-      toast.success(t('auth.forgotPassword.success.toastTitle'), {
-        description: t('auth.forgotPassword.success.toastDescription'),
-      })
+      setTimeout(() => router.replace('/'), 2000)
     } catch (error: unknown) {
       if (error instanceof AuthError) {
         form.setError('root', { message: error.message })
@@ -58,8 +58,16 @@ export function ForgotPasswordForm() {
           <InputFormField
             required
             control={form.control}
-            label={t('auth.forgotPassword.email')}
-            name="email"
+            inputProps={{ type: 'password' }}
+            label={t('auth.updatePassword.password')}
+            name="password"
+          />
+          <InputFormField
+            required
+            control={form.control}
+            inputProps={{ type: 'password' }}
+            label={t('auth.updatePassword.confirmPassword')}
+            name="confirmPassword"
           />
           <FormError />
           <Button
@@ -67,7 +75,7 @@ export function ForgotPasswordForm() {
             disabled={form.formState.isSubmitting}
             type="submit"
           >
-            {t('auth.forgotPassword.sendResetLink')}
+            {t('auth.updatePassword.updatePassword')}
           </Button>
         </form>
       </Form>
@@ -78,9 +86,9 @@ export function ForgotPasswordForm() {
     return (
       <Alert variant="success">
         <IconCircleCheck className="size-5" />
-        <AlertTitle>{t('auth.forgotPassword.success.title')}</AlertTitle>
+        <AlertTitle>{t('auth.updatePassword.success.title')}</AlertTitle>
         <AlertDescription>
-          {t('auth.forgotPassword.success.description')}
+          {t('auth.updatePassword.success.description')}
         </AlertDescription>
       </Alert>
     )
@@ -90,17 +98,12 @@ export function ForgotPasswordForm() {
     <>
       <Logo className="mx-auto" size="lg" spin={form.formState.isSubmitting} />
       <h1 className="text-center text-3xl font-semibold">
-        {t('auth.forgotPassword.title')}
+        {t('auth.updatePassword.title')}
       </h1>
       <div className="text-muted-foreground text-pretty text-center">
-        {t('auth.forgotPassword.description')}
+        {t('auth.updatePassword.description')}
       </div>
       {isResolved ? renderSuccess() : renderForm()}
-      <div className="text-center text-sm">
-        <Link className="underline" href="/auth/login">
-          {t('auth.forgotPassword.backToLogin')}
-        </Link>
-      </div>
     </>
   )
 }
