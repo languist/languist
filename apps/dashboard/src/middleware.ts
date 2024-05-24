@@ -29,11 +29,13 @@ const withAuth: MiddlewareFactory = (next: NextMiddleware) => {
       data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user && !request.nextUrl.pathname.includes('/auth/')) {
+    const isAuthRoute = request.nextUrl.pathname.startsWith('/auth/')
+
+    if (!user && !isAuthRoute) {
       return NextResponse.redirect(new URL('/auth/login', request.url))
     }
 
-    if (user && request.nextUrl.pathname.includes('/auth/')) {
+    if (user && isAuthRoute) {
       return NextResponse.redirect(new URL('/', request.url))
     }
 
