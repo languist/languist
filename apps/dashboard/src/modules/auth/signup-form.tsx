@@ -9,7 +9,6 @@ import { Button } from '@languist/ui/button'
 import { Form, FormError } from '@languist/ui/form'
 import { InputFormField } from '@languist/ui/form-field'
 import { Logo } from '@languist/ui/logo'
-import { IconCircleCheck } from '@tabler/icons-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -21,6 +20,7 @@ import type { ANY } from '../common/any'
 import { ProviderButton } from './provider-button'
 import { passwordAuthFormSchema } from './schema'
 import type { PasswordAuthFormValues } from './schema'
+import { CheckCircleBulk } from '@languist/icons'
 
 const { origin } = window.location
 
@@ -110,7 +110,7 @@ export function SignUpForm() {
   function renderSuccess() {
     return (
       <Alert variant="success">
-        <IconCircleCheck className="size-5" />
+        <CheckCircleBulk />
         <AlertTitle>{t('auth.signUp.success.title')}</AlertTitle>
         <AlertDescription>
           {t('auth.signUp.success.description')}

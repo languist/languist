@@ -11,11 +11,11 @@
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
     "@languist/auth": "workspace:*",
+    "@languist/icons": "workspace:*",
     "@languist/queries": "workspace:*",
     "@languist/supabase": "workspace:*",
     "@languist/ui": "workspace:*",
     "@supabase/ssr": "^0.3.0",
-    "@tabler/icons-react": "^3.5.0",
     "next": "14.2.3",
     "next-international": "^1.2.4",
     "next-themes": "^0.3.0",

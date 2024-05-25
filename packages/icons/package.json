@@ -1,0 +1,15 @@
+{
+  "name": "@languist/icons",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "generate": "svgr svg --typescript --no-prettier --jsx-runtime automatic --no-dimensions --replace-attr-values '#000=currentColor' --out-dir src/icons",
+    "watch": "chokidar 'svg/*.svg' -c 'bun generate'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@svgr/cli": "^8.1.0",
+    "chokidar-cli": "^3.0.0"
+  }
+}
