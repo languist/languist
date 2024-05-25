@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
     "@languist/auth": "workspace:*",
+    "@languist/queries": "workspace:*",
     "@languist/supabase": "workspace:*",
     "@languist/ui": "workspace:*",
     "@supabase/ssr": "^0.3.0",

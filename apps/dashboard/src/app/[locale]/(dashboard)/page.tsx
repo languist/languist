@@ -1,28 +1,35 @@
 'use client'
 
-import { useAuth } from '@languist/auth'
-import { Button } from '@languist/ui/button'
+import { useEffect } from 'react'
+
+import { useOrganizations } from '@languist/queries'
+import { AppLoader } from '@languist/ui/app-loader'
 import { useRouter } from 'next/navigation'
 
-import { AuthGreeting } from '@/modules/auth/auth-greeting'
-import { ModeToggle } from '@/modules/common/mode-toggle'
+import { useWorkspace } from '@/modules/common/hooks/use-workspace'
 
 export default function Home() {
-  const { logOut } = useAuth()
   const router = useRouter()
+  const workspace = useWorkspace()
+  const { isLoading: isLoadingOrgs, data: organizations } = useOrganizations()
 
-  return (
-    <main className="flex min-h-screen flex-col items-center gap-4 p-24">
-      <AuthGreeting />
-      <Button
-        onClick={() => {
-          logOut()
-          router.replace('/auth/login')
-        }}
-      >
-        Logout
-      </Button>
-      <ModeToggle />
-    </main>
-  )
+  useEffect(() => {
+    if (workspace) {
+      router.push(`/${workspace}`)
+      return
+    }
+
+    if (isLoadingOrgs) {
+      return
+    }
+
+    if (organizations?.[0]) {
+      router.push(`/${organizations[0].slug}`)
+      return
+    }
+
+    router.push('/getting-started')
+  }, [isLoadingOrgs, organizations, router, workspace])
+
+  return <AppLoader />
 }

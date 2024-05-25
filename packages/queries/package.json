@@ -1,0 +1,13 @@
+{
+  "name": "@languist/queries",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {},
+  "dependencies": {
+    "@languist/supabase": "workspace:*",
+    "@lukemorales/query-key-factory": "^1.3.4",
+    "@tanstack/react-query": "^5.38.0",
+    "react": "^18"
+  }
+}

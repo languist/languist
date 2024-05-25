@@ -6,7 +6,9 @@
     "./client": "./src/client/client.ts",
     "./middleware": "./src/client/middleware.ts",
     "./types": "./src/types.ts",
-    "./auth": "./src/auth.ts"
+    "./auth": "./src/auth.ts",
+    "./user": "./src/user.ts",
+    "./organization": "./src/organization.ts"
   },
   "scripts": {
     "start": "npx supabase start",
