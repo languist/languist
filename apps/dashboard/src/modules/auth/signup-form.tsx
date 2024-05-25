@@ -2,9 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLogin } from '@languist/auth'
+import { CheckCircleBulk, GithubBulk } from '@languist/icons'
 import { AuthError } from '@languist/supabase/auth'
 import { Alert, AlertDescription, AlertTitle } from '@languist/ui/alert'
-import { BrandIcons } from '@languist/ui/brand-icons'
 import { Button } from '@languist/ui/button'
 import { Form, FormError } from '@languist/ui/form'
 import { InputFormField } from '@languist/ui/form-field'
@@ -20,7 +20,6 @@ import type { ANY } from '../common/any'
 import { ProviderButton } from './provider-button'
 import { passwordAuthFormSchema } from './schema'
 import type { PasswordAuthFormValues } from './schema'
-import { CheckCircleBulk } from '@languist/icons'
 
 const { origin } = window.location
 
@@ -99,7 +98,7 @@ export function SignUpForm() {
             disabled={form.formState.isSubmitting}
             provider="github"
           >
-            <BrandIcons.GitHub className="mr-2 size-4" />
+            <GithubBulk className="mr-2 size-5" />
             {t('auth.signUp.github')}
           </ProviderButton>
         </form>
