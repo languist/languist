@@ -1,5 +1,13 @@
-import { AppLayout } from '@/modules/common/layouts/app-layout'
+'use client'
+
+import { useWorkspace } from '@/modules/common/hooks/use-workspace'
+import { FullscreenLayout } from '@/modules/common/layouts/fullscreen-layout'
 
 export default ({ children }: { children: React.ReactNode }) => {
-  return <AppLayout>{children}</AppLayout>
+  const workspace = useWorkspace()
+  return (
+    <FullscreenLayout shouldShowBackButton={!!workspace}>
+      {children}
+    </FullscreenLayout>
+  )
 }

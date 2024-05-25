@@ -8,7 +8,6 @@ import { Button } from '@languist/ui/button'
 import { Form, FormError } from '@languist/ui/form'
 import { InputFormField } from '@languist/ui/form-field'
 import { Logo } from '@languist/ui/logo'
-import { IconCircleCheck } from '@tabler/icons-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -17,6 +16,7 @@ import { useI18n } from '@/locales/client'
 
 import { forgotPasswordFormSchema } from './schema'
 import type { ForgotPasswordFormValues } from './schema'
+import { CheckCircleBulk } from '@languist/icons'
 
 const { origin } = window.location
 
@@ -77,7 +77,7 @@ export function ForgotPasswordForm() {
   function renderSuccess() {
     return (
       <Alert variant="success">
-        <IconCircleCheck className="size-5" />
+        <CheckCircleBulk />
         <AlertTitle>{t('auth.forgotPassword.success.title')}</AlertTitle>
         <AlertDescription>
           {t('auth.forgotPassword.success.description')}
