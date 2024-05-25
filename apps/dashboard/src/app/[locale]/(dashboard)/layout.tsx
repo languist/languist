@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 
 import { AppLoader } from '@languist/ui/app-loader'
 
-import { useInitApp } from '../../../modules/common/use-init-app'
+import { useInitApp } from '@/modules/common/hooks/use-init-app'
 
 type LayoutProps = {
   children: ReactNode
