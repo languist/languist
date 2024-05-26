@@ -23,8 +23,6 @@ import { ProviderButton } from './provider-button'
 import { passwordAuthFormSchema } from './schema'
 import type { PasswordAuthFormValues } from './schema'
 
-const { origin } = window.location
-
 const getFragmentParams = (fragment?: string) => {
   if (!fragment) {
     return {}
@@ -60,7 +58,7 @@ export function LoginForm() {
   async function onSubmit(values: PasswordAuthFormValues) {
     try {
       await submit(values, {
-        redirectTo: origin!,
+        redirectTo: process.env.NEXT_PUBLIC_ORIGIN_URL,
       })
       router.replace('/')
       toast.success(t('auth.login.success.toastTitle'), {
@@ -80,15 +78,15 @@ export function LoginForm() {
   return (
     <>
       <Logo className="mx-auto" size="lg" spin={form.formState.isSubmitting} />
-      <h1 className="text-center text-3xl font-semibold">
+      <h1 className="animate-in fade-in fill-mode-both text-center text-3xl font-semibold delay-100 duration-1000">
         {t('auth.login.title')}
       </h1>
-      <div className="text-muted-foreground text-pretty text-center">
+      <div className="text-muted-foreground animate-in fade-in fill-mode-both text-pretty text-center delay-200 duration-1000">
         {t('auth.login.description')}
       </div>
       <Form {...form}>
         <form
-          className="space-y-4 px-2 py-4"
+          className="animate-in fade-in fill-mode-both space-y-4 px-2 py-4 delay-300 duration-1000"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <InputFormField
@@ -142,7 +140,7 @@ export function LoginForm() {
           </ProviderButton>
         </form>
       </Form>
-      <div className="text-center text-sm">
+      <div className="animate-in fade-in fill-mode-both text-center text-sm delay-500 duration-1000">
         {t('auth.login.dontHaveAccount')}{' '}
         <Link className="underline" href="/auth/signup">
           {t('auth.login.signUp')}

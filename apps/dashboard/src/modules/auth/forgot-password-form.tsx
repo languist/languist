@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useResetPassword } from '@languist/auth'
+import { CheckCircleBulk } from '@languist/icons'
 import { AuthError } from '@languist/supabase/auth'
 import { Alert, AlertDescription, AlertTitle } from '@languist/ui/alert'
 import { Button } from '@languist/ui/button'
@@ -16,9 +17,6 @@ import { useI18n } from '@/locales/client'
 
 import { forgotPasswordFormSchema } from './schema'
 import type { ForgotPasswordFormValues } from './schema'
-import { CheckCircleBulk } from '@languist/icons'
-
-const { origin } = window.location
 
 export function ForgotPasswordForm() {
   const t = useI18n()
@@ -34,7 +32,7 @@ export function ForgotPasswordForm() {
   async function onSubmit(values: ForgotPasswordFormValues) {
     try {
       await submit(values, {
-        redirectTo: `${origin!}/auth/update-password`,
+        redirectTo: `${process.env.NEXT_PUBLIC_ORIGIN_URL}/auth/update-password`,
       })
       toast.success(t('auth.forgotPassword.success.toastTitle'), {
         description: t('auth.forgotPassword.success.toastDescription'),
@@ -52,7 +50,7 @@ export function ForgotPasswordForm() {
     return (
       <Form {...form}>
         <form
-          className="space-y-4 px-2 py-4"
+          className="animate-in fade-in fill-mode-both space-y-4 px-2 py-4 delay-300 duration-1000"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <InputFormField
@@ -76,7 +74,10 @@ export function ForgotPasswordForm() {
 
   function renderSuccess() {
     return (
-      <Alert variant="success">
+      <Alert
+        className="animate-in fade-in fill-mode-both duration-1000"
+        variant="success"
+      >
         <CheckCircleBulk />
         <AlertTitle>{t('auth.forgotPassword.success.title')}</AlertTitle>
         <AlertDescription>
@@ -89,14 +90,14 @@ export function ForgotPasswordForm() {
   return (
     <>
       <Logo className="mx-auto" size="lg" spin={form.formState.isSubmitting} />
-      <h1 className="text-center text-3xl font-semibold">
+      <h1 className="animate-in fade-in fill-mode-both text-center text-3xl font-semibold delay-100 duration-1000">
         {t('auth.forgotPassword.title')}
       </h1>
-      <div className="text-muted-foreground text-pretty text-center">
+      <div className="text-muted-foreground animate-in fade-in fill-mode-both text-pretty text-center delay-200 duration-1000">
         {t('auth.forgotPassword.description')}
       </div>
       {isResolved ? renderSuccess() : renderForm()}
-      <div className="text-center text-sm">
+      <div className="animate-in fade-in fill-mode-both text-center text-sm delay-500 duration-1000">
         <Link className="underline" href="/auth/login">
           {t('auth.forgotPassword.backToLogin')}
         </Link>
