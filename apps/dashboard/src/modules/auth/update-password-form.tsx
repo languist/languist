@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useUpdatePassword } from '@languist/auth'
+import { CheckCircleBulk } from '@languist/icons'
 import { AuthError } from '@languist/supabase/auth'
 import { Alert, AlertDescription, AlertTitle } from '@languist/ui/alert'
 import { Button } from '@languist/ui/button'
@@ -15,9 +16,6 @@ import { useI18n } from '@/locales/client'
 
 import { updatePasswordFormSchema } from './schema'
 import type { UpdatePasswordFormValues } from './schema'
-import { CheckCircleBulk } from '@languist/icons'
-
-const { origin } = window.location
 
 export function UpdatePasswordForm() {
   const t = useI18n()
@@ -36,7 +34,7 @@ export function UpdatePasswordForm() {
   async function onSubmit(values: UpdatePasswordFormValues) {
     try {
       await submit(values, {
-        redirectTo: origin!,
+        redirectTo: process.env.NEXT_PUBLIC_ORIGIN_URL,
       })
       setTimeout(() => router.replace('/'), 2000)
     } catch (error: unknown) {

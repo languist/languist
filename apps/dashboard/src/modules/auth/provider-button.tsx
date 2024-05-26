@@ -21,7 +21,7 @@ export function ProviderButton({ provider, ...props }: ProviderButtonProps) {
         await submit(
           { provider },
           {
-            redirectTo: `${origin!}/auth/callback`,
+            redirectTo: `${process.env.NEXT_PUBLIC_ORIGIN_URL}/auth/callback`,
           },
         )
       }}
