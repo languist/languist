@@ -41,7 +41,7 @@ export async function getOrganization(variables: { slug?: string | null }) {
   .eq('slug', variables.slug)).data?.[0]
 }
 
-export type CreateOrganizationVariables = Pick<Tables<'organizations'>, 'name' | 'slug' | 'logo'>
+export type CreateOrganizationVariables = Pick<Tables<'organizations'>, 'name' | 'slug'>
 
 export async function createOrganization(variables: CreateOrganizationVariables) {
   const currentUser = await getCurrentUser()

@@ -41,6 +41,7 @@
     "./brand-icons": "./src/components/ui/brand-icons.tsx",
     "./alert": "./src/components/ui/alert.tsx",
     "./sonner": "./src/components/ui/sonner.tsx",
+    "./card": "./src/components/ui/card.tsx",
     "./app-loader": "./src/components/ui/app-loader.tsx"
   }
 }

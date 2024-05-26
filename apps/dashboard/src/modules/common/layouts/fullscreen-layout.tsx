@@ -17,6 +17,8 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+import { ModeToggle } from '../mode-toggle'
+
 export type FullscreenLayoutProps = {
   children: React.ReactNode
   shouldShowBackButton?: boolean
@@ -32,7 +34,8 @@ export const FullscreenLayout = ({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="flex justify-between gap-2 p-2">
+      <div className="pointer-events-none absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(rgba(229,231,235,0.2)_1px,transparent_1px)]" />
+      <div className="relative flex justify-between gap-2 p-2">
         {shouldShowBackButton ? (
           <Button asChild size="icon" variant="secondary">
             <Link href="..">
@@ -63,6 +66,7 @@ export const FullscreenLayout = ({
         </DropdownMenu>
       </div>
       {children}
+      <ModeToggle className="absolute bottom-2 right-2" />
     </div>
   )
 }
