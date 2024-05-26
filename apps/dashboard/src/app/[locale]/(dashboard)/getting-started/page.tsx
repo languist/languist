@@ -1,10 +1,9 @@
-import { ModeToggle } from "@/modules/common/mode-toggle";
+import { CreateWorkspaceForm } from '@/modules/workspace/components/create-workspace-form'
 
 export default function GettingStartedPage() {
   return (
-    <div className="flex items-center flex-col justify-center flex-1">
-      <h1>Getting Started</h1>
-      <ModeToggle />
+    <div className="relative mx-auto flex w-full max-w-96 flex-1 flex-col items-center justify-center gap-4 pb-16">
+      <CreateWorkspaceForm />
     </div>
   )
 }

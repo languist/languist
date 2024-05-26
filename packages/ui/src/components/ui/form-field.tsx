@@ -25,6 +25,14 @@ type BaseFormFieldProps<
   className?: string
 }
 
+export type InputFormFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = BaseFormFieldProps<TFieldValues, TName> & {
+  inputProps?: InputProps
+  addon?: React.ReactNode
+}
+
 export const InputFormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -39,10 +47,9 @@ export const InputFormField = <
   placeholder,
   className,
   inputProps,
+  addon,
   ...props
-}: BaseFormFieldProps<TFieldValues, TName> & {
-  inputProps?: InputProps
-}) => {
+}: InputFormFieldProps<TFieldValues, TName>) => {
   const form = useFormContext<TFieldValues>()
   const isDisabled = disabled || form.formState.isSubmitting
 
@@ -55,12 +62,15 @@ export const InputFormField = <
         <FormItem className={className}>
           {customLabel || <FormLabel required={required}>{label}</FormLabel>}
           <FormControl>
-            <Input
-              disabled={isDisabled}
-              placeholder={placeholder}
-              {...inputProps}
-              {...field}
-            />
+            <div className="relative">
+              <Input
+                disabled={isDisabled}
+                placeholder={placeholder}
+                {...inputProps}
+                {...field}
+              />
+              {addon}
+            </div>
           </FormControl>
           <FormMessage />
         </FormItem>

@@ -1,5 +1,8 @@
 export default {
   description: 'A decent localization management platform',
+  common: {
+    error: 'Something went wrong. Please try again.',
+  },
   auth: {
     login: {
       title: 'Login to Languist',
@@ -63,6 +66,20 @@ export default {
         title: 'Password updated',
         description:
           'Your password has been successfully updated. You will be redirected to dashboard soon.',
+      },
+    },
+  },
+  workspace: {
+    create: {
+      title: 'Create a new workspace',
+      description:
+        'Workspaces are shared environments where teams can collaborate on projects.',
+      name: 'Workspace Name',
+      slug: 'Workspace URL',
+      create: 'Create workspace',
+      success: {
+        toastTitle: 'Workspace created',
+        toastDescription: 'Your workspace has been successfully created.',
       },
     },
   },

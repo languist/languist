@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 
+import { MoonBulk, SunBulk } from '@languist/icons'
 import { Button } from '@languist/ui/button'
 import {
   DropdownMenu,
@@ -10,14 +11,13 @@ import {
   DropdownMenuTrigger,
 } from '@languist/ui/dropdown-menu'
 import { useTheme } from 'next-themes'
-import { MoonBulk, SunBulk } from '@languist/icons'
 
-export function ModeToggle() {
+export function ModeToggle({ className }: { className?: string }) {
   const { setTheme } = useTheme()
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className={className}>
         <Button size="icon" variant="outline">
           <SunBulk className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonBulk className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
