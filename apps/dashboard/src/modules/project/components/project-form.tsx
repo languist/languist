@@ -1,6 +1,8 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCurrentUser } from '@languist/auth'
-import { useCreateProject } from '@languist/queries'
+import { createProjectAction } from '@languist/queries'
 import { Button } from '@languist/ui/button'
 import { Form, FormError } from '@languist/ui/form'
 import { InputFormField, SelectFormField } from '@languist/ui/form-field'
@@ -9,10 +11,10 @@ import { toast } from 'sonner'
 
 import { useI18n } from '@/locales/client'
 import type { ANY } from '@/modules/common/any'
+import { languages } from '@/modules/common/languages'
 
 import { projectFormSchema } from '../schema'
 import type { ProjectFormValues } from '../schema'
-import { languages } from '@/modules/common/languages'
 
 export function ProjectForm({
   organizationId,
@@ -22,8 +24,6 @@ export function ProjectForm({
   onCompleted?: () => void
 }) {
   const t = useI18n()
-
-  const { mutateAsync } = useCreateProject()
   const user = useCurrentUser()
 
   const form = useForm<ProjectFormValues>({
@@ -36,7 +36,7 @@ export function ProjectForm({
 
   async function onSubmit(values: ProjectFormValues) {
     try {
-      const result = await mutateAsync({
+      const result = await createProjectAction({
         name: values.name,
         source_language: values.sourceLanguage,
         organization_id: organizationId,

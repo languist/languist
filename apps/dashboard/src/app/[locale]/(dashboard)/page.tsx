@@ -1,35 +1,18 @@
-'use client'
+'use server'
 
-import { useEffect } from 'react'
+import { getCachedOrganizations } from '@languist/queries'
+import { getCookie } from 'cookies-next'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-import { useOrganizations } from '@languist/queries'
-import { AppLoader } from '@languist/ui/app-loader'
-import { useRouter } from 'next/navigation'
+export default async function Home() {
+  const organizations = await getCachedOrganizations()
 
-import { useWorkspace } from '@/modules/common/hooks/use-workspace'
+  if (!organizations?.length) {
+    redirect('/getting-started')
+  }
 
-export default function Home() {
-  const router = useRouter()
-  const workspace = useWorkspace()
-  const { isLoading: isLoadingOrgs, data: organizations } = useOrganizations()
+  const workspace = getCookie('workspace', { cookies })
 
-  useEffect(() => {
-    if (workspace) {
-      router.push(`/${workspace}`)
-      return
-    }
-
-    if (isLoadingOrgs) {
-      return
-    }
-
-    if (organizations?.[0]) {
-      router.push(`/${organizations[0].slug}`)
-      return
-    }
-
-    router.push('/getting-started')
-  }, [isLoadingOrgs, organizations, router, workspace])
-
-  return <AppLoader />
+  redirect(`/${workspace || organizations[0]?.slug}`)
 }

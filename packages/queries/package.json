@@ -8,6 +8,7 @@
     "@languist/supabase": "workspace:*",
     "@lukemorales/query-key-factory": "^1.3.4",
     "@tanstack/react-query": "^5.38.0",
+    "next": "14.2.3",
     "react": "^18"
   }
 }

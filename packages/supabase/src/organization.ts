@@ -1,5 +1,6 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { supabaseClient as supabase } from "./client/client";
-import { Tables } from "./types";
+import { Database, Tables } from "./types";
 import { getCurrentUser } from "./user";
 
 export type Organization = Tables<'organizations'> & {
@@ -9,10 +10,10 @@ export type Organization = Tables<'organizations'> & {
   }[]
 }
 
-export async function getOrganizations() {
-  const currentUser = await getCurrentUser()
+export async function getOrganizations(client: SupabaseClient<Database>) {
+  const currentUser = await getCurrentUser(client)
   if (!currentUser) return []
-  return (await supabase.from('organizations_members')
+  return (await client.from('organizations_members')
   .select(`
     organizations (
       *,
@@ -27,9 +28,9 @@ export async function getOrganizations() {
   ?.map((org) => org.organizations)
 }
 
-export async function getOrganization(variables: { slug?: string | null }) {
+export async function getOrganization(client: SupabaseClient<Database>, variables: { slug?: string | null }) {
   if (!variables.slug) return null
-  return (await supabase.from('organizations')
+  return (await client.from('organizations')
   .select(`
     *,
     members: organizations_members (
@@ -43,16 +44,22 @@ export async function getOrganization(variables: { slug?: string | null }) {
 
 export type CreateOrganizationVariables = Pick<Tables<'organizations'>, 'name' | 'slug'>
 
-export async function createOrganization(variables: CreateOrganizationVariables) {
-  const currentUser = await getCurrentUser()
+export async function createOrganization({
+  client,
+  variables,
+}: {
+  client: SupabaseClient<Database>
+  variables: CreateOrganizationVariables
+}) {
+  const currentUser = await getCurrentUser(client)
   if (!currentUser) return null
   await
-    supabase.from('organizations')
+    client.from('organizations')
     .insert({
       name: variables.name,
       slug: variables.slug,
     }).throwOnError()
-  const createdOrg = await getOrganization({ slug: variables.slug })
+  const createdOrg = await getOrganization(client, { slug: variables.slug })
   if (!createdOrg) return null
   return createdOrg
 }
@@ -104,11 +111,11 @@ export async function getOrganizationInvitations(variables: { organizationId: st
     .throwOnError()).data
 }
 
-export async function getMyInvitations() {
-  const currentUser = await getCurrentUser()
+export async function getMyInvitations(client: SupabaseClient<Database>) {
+  const currentUser = await getCurrentUser(client)
   if (!currentUser?.email) return []
   return (await
-    supabase.from('organizations_invitations')
+    client.from('organizations_invitations')
     .select(`
       *,
       inviter: profiles (*)

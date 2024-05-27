@@ -1,5 +1,5 @@
-import { supabaseClient } from "./client/client";
+import { SupabaseClient } from "./client/type";
 
-export async function getCurrentUser() {
-  return (await supabaseClient.auth.getUser()).data.user
+export async function getCurrentUser(client: SupabaseClient) {
+  return (await client.auth.getUser()).data.user
 }

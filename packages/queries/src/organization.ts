@@ -1,51 +1,69 @@
-import { CreateOrganizationVariables, UpdateOrganizationVariables, createOrganization, getOrganization, getOrganizations, updateOrganization } from "@languist/supabase/organization";
+import { UpdateOrganizationVariables, getOrganization, getOrganizations, updateOrganization } from "@languist/supabase/organization";
+import { createServerClient } from "@languist/supabase/server-client";
+import { createClient as createBrowserClient } from "@languist/supabase/client";
+import { SupabaseClient } from "@languist/supabase/type";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { UseMutationOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { unstable_cache } from "next/cache";
 
 export const organizationQueries = createQueryKeys('organization', {
-  list: () => ({
+  list: (client: SupabaseClient) => ({
     queryKey: ['list'],
-    queryFn: getOrganizations,
+    queryFn: () => getOrganizations(client),
   }),
-  detail: (slug: string) => ({
+  detail: (client: SupabaseClient, slug: string) => ({
     queryKey: [slug],
-    queryFn: () => getOrganization({slug}),
+    queryFn: () => getOrganization(client, {slug}),
   }),
-});
+})
 
 export function useOrganizations() {
-  return useQuery(organizationQueries.list())
+  const supabase = createBrowserClient()
+  
+  return useQuery(organizationQueries.list(supabase))
+}
+
+export const getCachedOrganizations = async () => {
+  const supabase = await createServerClient();
+
+  return unstable_cache(
+    async () => getOrganizations(supabase),
+    organizationQueries.list(supabase).queryKey as any,
+    {
+      tags: organizationQueries.list(supabase).queryKey as any,
+      revalidate: 3600,
+    }
+  )()
 }
 
 export function useOrganization(slug: string) {
-  return useQuery(organizationQueries.detail(slug))
+  const supabase = createBrowserClient()
+
+  return useQuery(organizationQueries.detail(supabase, slug))
 }
 
-export function useCreateOrganization(mutationOptions?: Omit<UseMutationOptions<any, Error, CreateOrganizationVariables>, 'mutationFn'>) {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: createOrganization,
-    ...mutationOptions,
-    onSuccess(data, variables, context) {
-      if (data?.slug) {
-        queryClient.setQueryData(organizationQueries.detail(data.slug).queryKey, data)
-      }
-      queryClient.invalidateQueries({
-        queryKey: organizationQueries._def,
-      })
-      mutationOptions?.onSuccess?.(data, variables, context)
-    },
-  })
+export const getCachedOrganization = async (slug: string) => {
+  const supabase = await createServerClient();
+
+  return unstable_cache(
+    async () => getOrganization(supabase, { slug }),
+    organizationQueries.detail(supabase, slug).queryKey as any,
+    {
+      tags: organizationQueries.detail(supabase, slug).queryKey as any,
+      revalidate: 3600,
+    }
+  )()
 }
 
 export function useUpdateOrganization(mutationOptions?: Omit<UseMutationOptions<any, Error, UpdateOrganizationVariables>, 'mutationFn'>) {
   const queryClient = useQueryClient()
+  const supabase = createBrowserClient()
   return useMutation({
     mutationFn: updateOrganization,
     ...mutationOptions,
     onSuccess(data, variables, context) {
       if (data?.slug) {
-        queryClient.setQueryData(organizationQueries.detail(data.slug).queryKey, data)
+        queryClient.setQueryData(organizationQueries.detail(supabase, data.slug).queryKey, data)
       }
       queryClient.invalidateQueries({
         queryKey: organizationQueries._def,
