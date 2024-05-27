@@ -1,4 +1,4 @@
 import { SupabaseClient as SupabaseClientOG } from "@supabase/supabase-js";
-import { Database } from "src/types";
+import { Database } from "../types";
 
 export type SupabaseClient = SupabaseClientOG<Database>;
