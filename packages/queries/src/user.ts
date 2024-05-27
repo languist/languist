@@ -1,14 +1,17 @@
+import { createClient } from "@languist/supabase/client";
+import { SupabaseClient } from "@languist/supabase/type";
 import { getCurrentUser } from "@languist/supabase/user";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { useQuery } from "@tanstack/react-query";
 
 export const userQueries = createQueryKeys('user', {
-  current: () => ({
+  current: (client: SupabaseClient) => ({
     queryKey: ['current'],
-    queryFn: getCurrentUser
+    queryFn: () => getCurrentUser(client)
   }),
 })
 
 export function useCurrentUser() {
-  return useQuery(userQueries.current())
+  const client = createClient()
+  return useQuery(userQueries.current(client))
 }

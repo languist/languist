@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "exports": {
+    "./type": "./src/client/type.ts",
     "./client": "./src/client/client.ts",
+    "./server-client": "./src/client/server.ts",
     "./middleware": "./src/client/middleware.ts",
     "./types": "./src/types.ts",
     "./auth": "./src/auth.ts",

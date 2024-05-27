@@ -1,13 +1,14 @@
-import { logActivities } from "./activity";
+import type { SupabaseClient } from "@supabase/supabase-js";
+// import { logActivities } from "./activity";
 import { supabaseClient as supabase } from "./client/client";
-import { Tables } from "./types";
+import { Database, Tables } from "./types";
 
 export type Project = Tables<'projects'> & {
   languages?: string[]
 }
 
-export async function getOrganizationProjects(organizationId: string) {
-  const { data, error } = await supabase
+export async function getOrganizationProjects(client: SupabaseClient<Database>, organizationId: string) {
+  const { data, error } = await client
     .from('projects')
     .select(`
       *,
@@ -16,7 +17,7 @@ export async function getOrganizationProjects(organizationId: string) {
     .eq('organization_id', organizationId)
     .throwOnError()
 
-  const { data: orgLanguages } = await supabase.rpc('get_organization_languages', {
+  const { data: orgLanguages } = await client.rpc('get_organization_languages', {
     organization_id: organizationId,
   })
 
@@ -32,8 +33,8 @@ export async function getOrganizationProjects(organizationId: string) {
   return result
 }
 
-export async function getProject(projectId: string) {
-  const { data, error } = await supabase
+export async function getProject(client: SupabaseClient<Database>, projectId: string) {
+  const { data, error } = await client
     .from('projects')
     .select(`
       *,
@@ -43,7 +44,7 @@ export async function getProject(projectId: string) {
     .throwOnError()
     .single()
 
-  const { data: projectLanguages } = await supabase.rpc('get_project_languages', {
+  const { data: projectLanguages } = await client.rpc('get_project_languages', {
     project_id: projectId,
   })
 
@@ -61,8 +62,14 @@ export async function getProject(projectId: string) {
 
 export type CreateProjectValues = Pick<Project, 'name' | 'source_language' | 'organization_id' | 'user_id'>
 
-export async function createProject(project: CreateProjectValues) {
-  const { data, error } = await supabase
+export async function createProject({
+  client,
+  project,
+} : {
+  client: SupabaseClient<Database>
+  project: CreateProjectValues
+}) {
+  const { data, error } = await client
     .from('projects')
     .insert(project)
     .select(`
@@ -76,14 +83,14 @@ export async function createProject(project: CreateProjectValues) {
     throw error
   }
   
-  await logActivities([{
-    organization_id: project.organization_id,
-    user_id: project.user_id,
-    action: 'created',
-    target_type: 'project',
-    target_id: data.id,
-    extra: null,
-  }])
+  // await logActivities([{
+  //   organization_id: project.organization_id,
+  //   user_id: project.user_id,
+  //   action: 'created',
+  //   target_type: 'project',
+  //   target_id: data.id,
+  //   extra: null,
+  // }])
 
   return data
 }
@@ -106,26 +113,32 @@ export async function updateProject({id, ...project}: UpdateProjectValues) {
     throw error
   }
 
-  await logActivities([{
-    organization_id: data.organization_id,
-    user_id: data.user_id,
-    action: 'updated',
-    target_type: 'project',
-    target_id: data.id,
-    extra: null,
-  }])
+  // await logActivities([{
+  //   organization_id: data.organization_id,
+  //   user_id: data.user_id,
+  //   action: 'updated',
+  //   target_type: 'project',
+  //   target_id: data.id,
+  //   extra: null,
+  // }])
 
   return data
 }
 
-export async function deleteProject(projectId: string) {
-  const project = await getProject(projectId)
+export async function deleteProject({
+  client,
+  projectId,
+} : {
+  client: SupabaseClient<Database>
+  projectId: string
+}) {
+  const project = await getProject(client, projectId)
 
   if (!project) {
     throw new Error('Project not found')
   }
 
-  const { error } = await supabase
+  const { error } = await client
     .from('projects')
     .delete()
     .eq('id', projectId)
@@ -135,14 +148,14 @@ export async function deleteProject(projectId: string) {
     throw error
   }
   
-  await logActivities([{
-    organization_id: project.organization_id,
-    user_id: project.user_id,
-    action: 'deleted',
-    target_type: 'project',
-    target_id: projectId,
-    extra: null,
-  }])
+  // await logActivities([{
+  //   organization_id: project.organization_id,
+  //   user_id: project.user_id,
+  //   action: 'deleted',
+  //   target_type: 'project',
+  //   target_id: projectId,
+  //   extra: null,
+  // }])
 
   return project
 }

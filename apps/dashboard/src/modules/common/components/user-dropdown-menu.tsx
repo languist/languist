@@ -1,3 +1,5 @@
+'use client'
+
 import type { FC } from 'react'
 
 import { useAuth } from '@languist/auth'
@@ -18,6 +20,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@languist/ui/dropdown-menu'
+import { deleteCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 
@@ -72,6 +75,7 @@ export const UserDropdownMenu: FC<UserDropdownMenuProps> = () => {
             logOut()
             router.replace('/auth/login')
             queryClient.clear()
+            deleteCookie('workspace')
           }}
         >
           {t('auth.logout')}

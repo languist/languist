@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCreateOrganization } from '@languist/queries'
+import { createOrganizationAction } from '@languist/queries'
 import { AuthError } from '@languist/supabase/auth'
 import { Button } from '@languist/ui/button'
 import { Card, CardContent } from '@languist/ui/card'
@@ -26,8 +26,6 @@ export function CreateWorkspaceForm() {
   const t = useI18n()
   const router = useRouter()
 
-  const { mutateAsync } = useCreateOrganization()
-
   const form = useForm<CreateWorkspaceFormValues>({
     resolver: zodResolver(createWorkspaceFormSchema),
     defaultValues: {
@@ -46,7 +44,7 @@ export function CreateWorkspaceForm() {
 
   async function onSubmit(values: CreateWorkspaceFormValues) {
     try {
-      const result = await mutateAsync(values)
+      const result = await createOrganizationAction(values)
       if (result?.slug) {
         router.push(`/${result.slug}`)
         toast.success(t('workspace.create.success.toastTitle'), {
@@ -86,6 +84,9 @@ export function CreateWorkspaceForm() {
                 control={form.control}
                 label={t('workspace.create.name')}
                 name="name"
+                inputProps={{
+                  autoFocus: true,
+                }}
               />
               <InputFormField
                 required
