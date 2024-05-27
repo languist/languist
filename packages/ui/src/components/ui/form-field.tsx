@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form'
 
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -12,6 +13,7 @@ import {
 } from './form'
 import type { InputProps } from './input'
 import { Input } from './input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select'
 
 type BaseFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -23,6 +25,7 @@ type BaseFormFieldProps<
   required?: boolean
   disabled?: boolean
   className?: string
+  description?: string
 }
 
 export type InputFormFieldProps<
@@ -48,6 +51,7 @@ export const InputFormField = <
   className,
   inputProps,
   addon,
+  description,
   ...props
 }: InputFormFieldProps<TFieldValues, TName>) => {
   const form = useFormContext<TFieldValues>()
@@ -72,6 +76,66 @@ export const InputFormField = <
               {addon}
             </div>
           </FormControl>
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
+      )}
+      {...props}
+    />
+  )
+}
+
+
+export type SelectFormFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = BaseFormFieldProps<TFieldValues, TName> & {
+  options: Array<{ value: string; label: string }>
+}
+
+export const SelectFormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+  control,
+  name,
+  label,
+  customLabel,
+  required,
+  disabled,
+  rules,
+  placeholder,
+  className,
+  options,
+  description,
+  ...props
+}: SelectFormFieldProps<TFieldValues, TName>) => {
+  const form = useFormContext<TFieldValues>()
+  const isDisabled = disabled || form.formState.isSubmitting
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      rules={rules}
+      render={({ field }) => (
+        <FormItem className={className}>
+          {customLabel || <FormLabel required={required}>{label}</FormLabel>}
+          <Select disabled={isDisabled} onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder={placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              {options.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

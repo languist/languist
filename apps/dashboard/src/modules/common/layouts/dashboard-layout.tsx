@@ -12,7 +12,7 @@ export type DashboardLayoutProps = {
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="bg-background sticky top-0 flex h-16 items-center justify-between gap-2 border-b px-4">
+      <header className="bg-card sticky top-0 z-10 flex h-16 items-center justify-between gap-2 border-b px-4">
         <div className="flex items-center gap-2">
           <Link href="/">
             <Logo size="sm" />
@@ -25,7 +25,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <UserDropdownMenu />
         </div>
       </header>
-      {children}
+      <div className="relative">{children}</div>
     </div>
   )
 }

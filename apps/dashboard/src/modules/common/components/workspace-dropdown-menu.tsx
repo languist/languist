@@ -39,7 +39,7 @@ export function WorkspaceDropdownMenu() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="min-w-52" side="bottom">
-          <DropdownMenuItem className="hover:!bg-inherit">
+          <DropdownMenuItem className="font-medium hover:!bg-inherit">
             <WorkspaceBulk className="text-primary mr-2 h-5 w-5" />
             {workspace?.name}
             <DropdownMenuShortcut>
