@@ -8,6 +8,7 @@
     "./types": "./src/types.ts",
     "./auth": "./src/auth.ts",
     "./user": "./src/user.ts",
+    "./profile": "./src/profile.ts",
     "./organization": "./src/organization.ts"
   },
   "scripts": {

@@ -4,7 +4,7 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "generate": "svgr svg --typescript --no-prettier --jsx-runtime automatic --no-dimensions --replace-attr-values '#000=currentColor' --out-dir src/icons",
+    "generate": "svgr svg --typescript --no-prettier --jsx-runtime automatic --no-dimensions --replace-attr-values '#000=currentColor,#000000=currentColor' --out-dir src/icons",
     "watch": "chokidar 'svg/*.svg' -c 'bun generate'"
   },
   "dependencies": {},

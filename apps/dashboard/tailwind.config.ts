@@ -11,6 +11,7 @@ export default {
     extend: {
       backgroundImage: {
         'auth-pattern': "url('/auth-pattern.svg')",
+        'avatar-fallback': "url('/avatar-fallback.png')",
       },
     },
   },

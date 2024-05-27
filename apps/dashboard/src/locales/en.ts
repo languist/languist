@@ -2,6 +2,12 @@ export default {
   description: 'A decent localization management platform',
   common: {
     error: 'Something went wrong. Please try again.',
+    manageAccount: 'Manage account',
+    theme: {
+      light: 'Light',
+      dark: 'Dark',
+      system: 'System',
+    },
   },
   auth: {
     login: {
@@ -68,8 +74,10 @@ export default {
           'Your password has been successfully updated. You will be redirected to dashboard soon.',
       },
     },
+    logout: 'Sign out',
   },
   workspace: {
+    createNewWorkspace: 'Create new workspace',
     create: {
       title: 'Create a new workspace',
       description:
