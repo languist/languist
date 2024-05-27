@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unknown-property */
+
 'use client'
 
 import { QueryClientProvider } from '@languist/queries'
@@ -22,7 +24,9 @@ export function Providers({ locale, children }: ProviderProps) {
             attribute="class"
             defaultTheme="system"
           >
-            {children}
+            <div className="bg-background" vaul-drawer-wrapper="">
+              {children}
+            </div>
           </ThemeProvider>
         </I18nProviderClient>
       </AuthProvider>

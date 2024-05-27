@@ -9,6 +9,8 @@
     "./auth": "./src/auth.ts",
     "./user": "./src/user.ts",
     "./profile": "./src/profile.ts",
+    "./activity": "./src/activity.ts",
+    "./project": "./src/project.ts",
     "./organization": "./src/organization.ts"
   },
   "scripts": {

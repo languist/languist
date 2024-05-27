@@ -91,4 +91,18 @@ export default {
       },
     },
   },
+  project: {
+    listTitle: 'Projects',
+    createNewProject: 'Create new project',
+    create: {
+      title: 'Setup a new project',
+      name: 'Project Name',
+      sourceLanguage: 'Source Language',
+      create: 'Create project',
+      success: {
+        toastTitle: 'Project created',
+        toastDescription: 'Your project has been successfully created.',
+      },
+    },
+  },
 } as const
