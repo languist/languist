@@ -7,9 +7,9 @@ import { UseMutationOptions, useMutation, useQuery, useQueryClient } from "@tans
 import { unstable_cache } from "next/cache";
 
 export const projectQueries = createQueryKeys('project', {
-  listByOrganization: (organizationId: string) => ({
+  listByOrganization: (client: SupabaseClient, organizationId: string) => ({
     queryKey: ['list-by-organization', organizationId],
-    queryFn: (client: SupabaseClient) => getOrganizationProjects(client, organizationId),
+    queryFn: () => getOrganizationProjects(client, organizationId),
   }),
   detail: (client: SupabaseClient, id: string) => ({
     queryKey: ['detail', id],
@@ -18,8 +18,10 @@ export const projectQueries = createQueryKeys('project', {
 });
 
 export function useOrganizationProjects(organizationId?: string) {
+  const supabase = createBrowserClient()
+
   return useQuery({
-    ...projectQueries.listByOrganization(organizationId!),
+    ...projectQueries.listByOrganization(supabase, organizationId!),
     enabled: !!organizationId,
   })
 }
@@ -29,18 +31,34 @@ export const getCachedOrganizationProjects = async (organizationId: string) => {
 
   return unstable_cache(
     async (organizationId: string) => getOrganizationProjects(supabase, organizationId),
-    projectQueries.listByOrganization(organizationId).queryKey as any,
+    projectQueries.listByOrganization(supabase, organizationId).queryKey as any,
     {
-      tags: projectQueries.listByOrganization(organizationId).queryKey as any,
+      tags: projectQueries.listByOrganization(supabase, organizationId).queryKey as any,
       revalidate: 180,
     }
   )(organizationId)
 }
 
-export function useProject(projectId: string) {
+export function useProject(projectId?: string) {
   const supabase = createBrowserClient()
 
-  return useQuery(projectQueries.detail(supabase, projectId))
+  return useQuery({
+    ...projectQueries.detail(supabase, projectId!),
+    enabled: !!projectId,
+  })
+}
+
+export const getCachedProject = async (projectId: string) => {
+  const supabase = await createServerClient();
+
+  return unstable_cache(
+    async (projectId: string) => getProject(supabase, projectId),
+    projectQueries.detail(supabase, projectId).queryKey as any,
+    {
+      tags: projectQueries.detail(supabase, projectId).queryKey as any,
+      revalidate: 180,
+    }
+  )(projectId)
 }
 
 export function useUpdateProject(mutationOptions?: Omit<UseMutationOptions<any, Error, UpdateProjectValues>, 'mutationFn'>) {
@@ -52,7 +70,7 @@ export function useUpdateProject(mutationOptions?: Omit<UseMutationOptions<any, 
     onSuccess(data, variables, context) {
       queryClient.setQueryData(projectQueries.detail(supabase, data.id).queryKey, data)
       queryClient.invalidateQueries({
-        queryKey: projectQueries.listByOrganization(data.organization_id).queryKey,
+        queryKey: projectQueries.listByOrganization(supabase, data.organization_id).queryKey,
       })
       mutationOptions?.onSuccess?.(data, variables, context)
     },
@@ -70,7 +88,7 @@ export function useDeleteProject(mutationOptions?: Omit<UseMutationOptions<any, 
     ...mutationOptions,
     onSuccess(data, variables, context) {
       queryClient.invalidateQueries({
-        queryKey: projectQueries.listByOrganization(data.organization_id).queryKey,
+        queryKey: projectQueries.listByOrganization(supabase, data.organization_id).queryKey,
       })
       mutationOptions?.onSuccess?.(data, variables, context)
     },

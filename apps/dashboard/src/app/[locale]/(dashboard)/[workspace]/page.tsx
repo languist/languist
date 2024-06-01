@@ -25,11 +25,11 @@ export default async function DashboardPage({
   const projects = await getCachedOrganizationProjects(data.id)
 
   return (
-    <div className="container max-w-6xl px-5 py-8 pb-20 lg:p-14">
+    <div className="max-w-8xl container px-5 py-8 pb-20 lg:p-14">
       <h1 className="animate-in fade-in fill-mode-both text-3xl font-semibold delay-0 duration-1000">
         {t('project.listTitle')}
       </h1>
-      <div className="animate-in fade-in fill-mode-both mt-9 grid auto-rows-[minmax(10rem,_1fr)] grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 delay-200 duration-1000 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="animate-in fade-in fill-mode-both mt-9 grid auto-rows-[minmax(12rem,_1fr)] grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 delay-200 duration-1000 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {projects?.map((project) => (
           <ProjectCard
             key={project.id}

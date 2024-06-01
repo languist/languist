@@ -25,11 +25,11 @@ export async function getOrganizations(client: SupabaseClient<Database>) {
   `)
   .throwOnError()
   .eq('user_id', currentUser.id)).data
-  ?.map((org) => org.organizations)
+  ?.map((org) => org.organizations) || []
 }
 
 export async function getOrganization(client: SupabaseClient<Database>, variables: { slug?: string | null }) {
-  if (!variables.slug) return null
+  if (!variables.slug) return undefined
   return (await client.from('organizations')
   .select(`
     *,
@@ -39,7 +39,7 @@ export async function getOrganization(client: SupabaseClient<Database>, variable
     )
   `)
   .throwOnError()
-  .eq('slug', variables.slug)).data?.[0]
+  .eq('slug', variables.slug)).data?.[0] || undefined
 }
 
 export type CreateOrganizationVariables = Pick<Tables<'organizations'>, 'name' | 'slug'>

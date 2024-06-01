@@ -1,5 +1,3 @@
-'use server'
-
 import { getCachedOrganizations } from '@languist/queries'
 import { getCookie } from 'cookies-next'
 import { cookies } from 'next/headers'
