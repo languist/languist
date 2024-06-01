@@ -2,6 +2,7 @@ import { ArrowRight, ProjectBulk } from '@languist/icons'
 import type { Project } from '@languist/supabase/project'
 import { Card, CardContent, CardFooter } from '@languist/ui/card'
 import Link from 'next/link'
+import { CircleFlagLanguage } from 'react-circle-flags'
 
 export type ProjectCardProps = {
   data: Project
@@ -14,9 +15,22 @@ export const ProjectCard = ({ data, workspace }: ProjectCardProps) => {
       <Card className="bg-muted group flex flex-col border-none p-1 pb-0 shadow-none">
         <CardContent className="bg-background relative flex flex-1 flex-col justify-end rounded-lg px-3 py-2 shadow-sm">
           <ProjectBulk className="text-primary absolute left-3 top-3 size-8" />
-          <p className="text-muted-foreground text-sm">
-            {data.languages?.join(', ')}
-          </p>
+          <div className="mb-1 flex items-center gap-1 self-start rounded-md border border-dashed p-1">
+            {data.languages?.length ? (
+              data.languages.map((lang) => (
+                <CircleFlagLanguage
+                  key={lang}
+                  className="size-4"
+                  languageCode={lang}
+                />
+              ))
+            ) : (
+              <CircleFlagLanguage
+                className="size-4"
+                languageCode={data.source_language!}
+              />
+            )}
+          </div>
           <h3 className="text-lg font-semibold">{data.name}</h3>
         </CardContent>
         <CardFooter className="text-muted-foreground flex justify-between overflow-hidden px-3 py-2 text-xs">
