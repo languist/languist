@@ -3,6 +3,7 @@
 'use client'
 
 import { QueryClientProvider } from '@languist/queries'
+import { TooltipProvider } from '@languist/ui/tooltip'
 
 import { I18nProviderClient } from '@/locales/client'
 import { AuthProvider } from '@/modules/auth/auth-provider'
@@ -24,9 +25,11 @@ export function Providers({ locale, children }: ProviderProps) {
             attribute="class"
             defaultTheme="system"
           >
-            <div className="bg-background" vaul-drawer-wrapper="">
-              {children}
-            </div>
+            <TooltipProvider delayDuration={0}>
+              <div className="bg-background" vaul-drawer-wrapper="">
+                {children}
+              </div>
+            </TooltipProvider>
           </ThemeProvider>
         </I18nProviderClient>
       </AuthProvider>

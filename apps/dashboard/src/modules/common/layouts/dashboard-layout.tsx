@@ -14,7 +14,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <UserDropdownMenu />
         </div>
       </header>
-      <div className="relative">{children}</div>
+      <div className="relative flex flex-1">{children}</div>
     </div>
   )
 }

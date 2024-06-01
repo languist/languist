@@ -104,5 +104,12 @@ export default {
         toastDescription: 'Your project has been successfully created.',
       },
     },
+    nav: {
+      overview: 'Overview',
+      editor: 'Editor',
+      source: 'Source',
+      'api-keys': 'API Keys',
+      settings: 'Settings',
+    },
   },
 } as const

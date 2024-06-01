@@ -3,5 +3,5 @@ export default async function ProjectPage({
 }: {
   params: { projectId: string }
 }) {
-  return <div>{params.projectId}</div>
+  return <div>Project dashboard {params.projectId}</div>
 }
