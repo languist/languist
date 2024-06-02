@@ -1,4 +1,4 @@
-import { UpdateOrganizationVariables, getOrganization, getOrganizations, updateOrganization } from "@languist/supabase/organization";
+import { Organization, UpdateOrganizationVariables, getOrganization, getOrganizations, updateOrganization } from "@languist/supabase/organization";
 import { createServerClient } from "@languist/supabase/server-client";
 import { createClient as createBrowserClient } from "@languist/supabase/client";
 import { SupabaseClient } from "@languist/supabase/type";
@@ -38,8 +38,14 @@ export const getCachedOrganizations = async () => {
 
 export function useOrganization(slug: string) {
   const supabase = createBrowserClient()
+  const queryClient = useQueryClient()
 
-  return useQuery(organizationQueries.detail(supabase, slug))
+  return useQuery({
+    ...organizationQueries.detail(supabase, slug),
+    initialData: () => {
+      return queryClient.getQueryData<Organization[]>(organizationQueries.list(supabase).queryKey)?.find((org) => org.slug === slug)
+    }
+  })
 }
 
 export const getCachedOrganization = async (slug: string) => {

@@ -34,7 +34,7 @@ export const FullscreenLayout = ({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="pointer-events-none absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(rgba(229,231,235,0.2)_1px,transparent_1px)]" />
+      <div className="pointer-events-none absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:bg-[radial-gradient(rgba(229,231,235,0.1)_1px,transparent_1px)]" />
       <div className="relative flex justify-between gap-2 p-2">
         {shouldShowBackButton ? (
           <Button asChild size="icon" variant="ghost">

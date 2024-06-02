@@ -23,10 +23,9 @@ export function WorkspaceDropdownMenu({
 }: WorkspaceDropdownMenuProps) {
   const t = useI18n()
   const { data: currentWorkspace, isLoading } = useOrganization(workspace)
-  const { data: allWorkspaces, isLoading: isLoadingWorkspaces } =
-    useOrganizations()
+  const { data: allWorkspaces } = useOrganizations()
 
-  if (isLoading || isLoadingWorkspaces) {
+  if (isLoading) {
     return <Skeleton className="bg-muted h-8 w-[130px] rounded-md" />
   }
 

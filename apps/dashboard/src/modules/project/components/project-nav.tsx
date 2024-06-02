@@ -32,7 +32,7 @@ export function ProjectNav({ isCollapsed, links }: ProjectNavProps) {
 
           if (isCollapsed) {
             return (
-              <Tooltip key={link.title} delayDuration={0}>
+              <Tooltip key={link.title}>
                 <TooltipTrigger asChild>
                   <Link
                     href={link.href}

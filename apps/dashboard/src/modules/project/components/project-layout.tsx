@@ -9,6 +9,7 @@ import {
   SettingBulk,
   SourceBulk,
 } from '@languist/icons'
+import type { Project } from '@languist/supabase/project'
 import { cn } from '@languist/ui/cn'
 import {
   ResizableHandle,
@@ -23,7 +24,7 @@ import { ProjectNav } from './project-nav'
 
 type ProjectLayoutProps = {
   children: ReactNode
-  projectId: string
+  project: Project
   workspace: string
   defaultLayout: number[] | undefined
   defaultCollapsed?: boolean
@@ -32,7 +33,7 @@ type ProjectLayoutProps = {
 
 export function ProjectLayout({
   children,
-  projectId,
+  project,
   workspace,
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
@@ -41,11 +42,11 @@ export function ProjectLayout({
   const t = useI18n()
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
 
-  const rootProjectPath = `/${workspace}/${projectId}`
+  const rootProjectPath = `/${workspace}/${project.id}`
 
   return (
     <div className="flex flex-1 flex-col">
-      <ProjectBreadcrumb projectId={projectId} />
+      <ProjectBreadcrumb project={project} />
       <ResizablePanelGroup
         className="h-full flex-1 items-stretch"
         direction="horizontal"
@@ -62,7 +63,6 @@ export function ProjectLayout({
           maxSize={20}
           minSize={15}
           className={cn(
-            'hidden flex-1 md:block',
             isCollapsed &&
               'min-w-[50px] transition-all duration-300 ease-in-out',
           )}
