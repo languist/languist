@@ -496,8 +496,11 @@ export type Database = {
           organization_id: string
         }
         Returns: {
+          language: string
           project_id: string
-          languages: string[]
+          file_count: number
+          phrase_count: number
+          translated_count: number
         }[]
       }
       get_organization_projects: {
@@ -505,6 +508,21 @@ export type Database = {
           organization_id: string
         }
         Returns: string[]
+      }
+      get_organizations: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: number
+          name: string
+          logo: string
+          slug: string
+          created_at: string
+          last_translated_at: string
+          languages: string[]
+          file_count: number
+          phrase_count: number
+          translated_count: number
+        }[]
       }
       get_organizations_for_user: {
         Args: {
@@ -517,7 +535,10 @@ export type Database = {
           project_id: string
         }
         Returns: {
-          languages: string[]
+          language: string
+          file_count: number
+          phrase_count: number
+          translated_count: number
         }[]
       }
     }

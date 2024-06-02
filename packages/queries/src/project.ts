@@ -1,4 +1,4 @@
-import { UpdateProjectValues, deleteProject, getOrganizationProjects, getProject, updateProject } from "@languist/supabase/project";
+import { UpdateProjectValues, deleteProject, getLastEditedTranslationByProjectLanguage, getOrganizationProjects, getProject, updateProject } from "@languist/supabase/project";
 import { SupabaseClient } from "@languist/supabase/type";
 import { createClient as createBrowserClient } from "@languist/supabase/client";
 import { createServerClient } from "@languist/supabase/server-client";
@@ -14,6 +14,10 @@ export const projectQueries = createQueryKeys('project', {
   detail: (client: SupabaseClient, id: string) => ({
     queryKey: ['detail', id],
     queryFn: () => getProject(client, id),
+  }),
+  lastEditedByLanguage: (client: SupabaseClient, id: string, language: string) => ({
+    queryKey: ['last-edited-by-language', id, language],
+    queryFn: () => getLastEditedTranslationByProjectLanguage(client, id, language),
   }),
 });
 
@@ -44,6 +48,15 @@ export function useProject(projectId?: string) {
 
   return useQuery({
     ...projectQueries.detail(supabase, projectId!),
+    enabled: !!projectId,
+  })
+}
+
+export function useLastEditedTranslationByProjectLanguage(projectId: string, language: string) {
+  const supabase = createBrowserClient()
+
+  return useQuery({
+    ...projectQueries.lastEditedByLanguage(supabase, projectId, language),
     enabled: !!projectId,
   })
 }

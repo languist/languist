@@ -60,9 +60,10 @@ export function ProjectLayout({
           collapsible
           collapsedSize={navCollapsedSize}
           defaultSize={defaultLayout[0]}
-          maxSize={20}
-          minSize={15}
+          maxSize={16}
+          minSize={14}
           className={cn(
+            'hidden lg:block',
             isCollapsed &&
               'min-w-[50px] transition-all duration-300 ease-in-out',
           )}
@@ -111,7 +112,7 @@ export function ProjectLayout({
           />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>{children}</ResizablePanel>
+        <ResizablePanel className="flex flex-1">{children}</ResizablePanel>
       </ResizablePanelGroup>
     </div>
   )

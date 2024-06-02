@@ -16,7 +16,7 @@ export function ProjectBreadcrumb({ project }: { project: Project }) {
   const t = useI18n()
 
   return (
-    <div className="bg-muted animate-in fade-in fill-mode-both flex h-9 items-center gap-1 border-b px-4 text-xs delay-0 duration-1000">
+    <div className="bg-muted sticky top-16 z-10 flex h-9 items-center gap-1 border-b px-4 text-xs">
       <Link
         href="."
         className={cn(
@@ -36,7 +36,9 @@ export function ProjectBreadcrumb({ project }: { project: Project }) {
               index !== segments.length - 1 && 'text-muted-foreground',
             )}
           >
-            {t(`project.nav.${segment}` as ANY, {})}
+            {t(`project.nav.${segment}` as ANY, {
+              count: 0,
+            })}
           </Link>
         </Fragment>
       ))}

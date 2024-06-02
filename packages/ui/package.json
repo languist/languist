@@ -20,6 +20,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@suyalcinkaya/gauge": "^0.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "next-themes": "^0.3.0",
@@ -56,6 +57,8 @@
     "./select": "./src/components/ui/select.tsx",
     "./resizable": "./src/components/ui/resizable.tsx",
     "./tooltip": "./src/components/ui/tooltip.tsx",
+    "./badge": "./src/components/ui/badge.tsx",
+    "./gauge": "./src/components/ui/gauge.tsx",
     "./app-loader": "./src/components/ui/app-loader.tsx"
   }
 }

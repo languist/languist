@@ -21,7 +21,7 @@ export function ProjectNav({ isCollapsed, links }: ProjectNavProps) {
   const pathname = usePathname()
 
   return (
-    <div
+    <aside
       className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
       data-collapsed={isCollapsed}
     >
@@ -69,6 +69,6 @@ export function ProjectNav({ isCollapsed, links }: ProjectNavProps) {
           )
         })}
       </nav>
-    </div>
+    </aside>
   )
 }

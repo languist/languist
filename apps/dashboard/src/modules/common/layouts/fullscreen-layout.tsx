@@ -17,6 +17,8 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+import { useI18n } from '@/locales/client'
+
 import { ModeToggle } from '../mode-toggle'
 
 export type FullscreenLayoutProps = {
@@ -28,6 +30,7 @@ export const FullscreenLayout = ({
   children,
   shouldShowBackButton,
 }: FullscreenLayoutProps) => {
+  const t = useI18n()
   const { user, logOut } = useAuth()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -60,7 +63,7 @@ export const FullscreenLayout = ({
                 queryClient.clear()
               }}
             >
-              Log out
+              {t('auth.logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

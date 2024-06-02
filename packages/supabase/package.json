@@ -13,6 +13,7 @@
     "./profile": "./src/profile.ts",
     "./activity": "./src/activity.ts",
     "./project": "./src/project.ts",
+    "./file": "./src/file.ts",
     "./organization": "./src/organization.ts"
   },
   "scripts": {
